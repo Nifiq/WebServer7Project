@@ -1,14 +1,10 @@
 <?php
-session_start();
 
-header('Content-Type: application/json; charset=utf-8');
-header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+declare(strict_types=1);
 
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
+require_once __DIR__ . '/request_helpers.php';
 
-echo json_encode([
+json_response(200, [
     'ok' => true,
-    'csrf_token' => $_SESSION['csrf_token'],
-], JSON_UNESCAPED_UNICODE);
+    'csrf_token' => csrf_token(),
+]);
